@@ -50,9 +50,11 @@ def transform(data):
     for item in data:
         f = requests.get(item[0])
         soup = BeautifulSoup(f.content, 'html.parser')
-        ul_tag = soup.find('ul', class_='recipe-ing-list')
-        for li_tag in ul_tag.find_all('li'):
-            final_list.append([li_tag.text, item[1]])
+
+        ul_tags = soup.findAll('ul', class_='recipe-ing-list')
+        for ul_tag in ul_tags:
+            for li_tag in ul_tag.find_all('li'):
+                final_list.append([li_tag.text, item[1]])
 
     data = final_list
     return data
